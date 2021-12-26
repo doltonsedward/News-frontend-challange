@@ -16,7 +16,7 @@ const Home = () => {
     }, [])
     return (
         <div>
-            <p>Hello world</p>
+            <p>Hello Dollong</p>
         </div>
     )
 }
