@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: .3s;
+  transition: .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
 body {
