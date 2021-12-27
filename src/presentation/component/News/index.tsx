@@ -5,13 +5,15 @@ import { useDispatch } from 'react-redux'
 
 import { API } from "../../../infrastructure"
 
+import React from 'react';
 import { 
     CardGroup,
     Card,
     CardImg,
     CardBody,
     CardTitle,
-    CardText
+    CardText,
+    Button
 } from 'reactstrap'
 import { addNews } from '../../../application'
 
@@ -20,7 +22,7 @@ const News = () => {
     const dispatch = useDispatch()
     const getArticles = async () => {
         try {
-            const response = await API.get('/everything?q=bitcoin&sortBy=popularity&apiKey=72ac3317a1ef443ab9a3b7932ee7ef03')
+            const response = await API.get(`/everything?q=bitcoin&sortBy=relevancy&apiKey=${process.env.REACT_APP_API_KEY}`)
             setArticles(response.data.articles)
         } catch (error) {
             console.log(error)
@@ -31,8 +33,8 @@ const News = () => {
         dispatch(addNews({
             title: item.title,
             description: item.description,
-            image: item.image,
-            sourceName: item.sourceName,
+            image: item.urlToImage,
+            sourceName: item.source.name,
             url: item.url
         }))
     }
@@ -42,7 +44,14 @@ const News = () => {
     }, [])
     return (
         <div className="home-page">
-            <h1 className="text-center">Crash News</h1>
+            <div className="title__home-page text-center">
+                <h1>Crash News</h1>
+                <h2>The warehouse is the latest, newest, and most popular news. All stored in one website</h2>
+            </div>
+            <div className="header__home-page">
+                <p>Search by: </p>
+                <Button color="primary" outline>Popularity</Button>
+            </div>
             <CardGroup className="responsive-grid">
                 {articles.map((item:any, i:number) => (
                     <Link to="/detail-news" key={i} className="wrapper__card" onClick={() => handleDetailNews(item)}>
@@ -57,7 +66,7 @@ const News = () => {
                                 <span className="source">tes</span>
                             </div> 
                             <CardBody>
-                                <CardTitle tag="h2">
+                                <CardTitle tag="h3">
                                     {item.title}
                                 </CardTitle>
                                 <CardText>
