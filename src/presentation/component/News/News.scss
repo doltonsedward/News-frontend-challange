@@ -1,7 +1,13 @@
 .home-page {
     padding: 20px;
 
-    .title__home-page { margin-bottom: 50px }
+    .title__home-page { 
+        margin-bottom: 50px;
+
+        h2 {
+            font-size: 20px;
+        }
+    }
 
     .wrapper__card {
         padding: 20px;
@@ -48,6 +54,7 @@
                 }
     
                 .card-text {
+                    color: var(--subtitle-color);
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
