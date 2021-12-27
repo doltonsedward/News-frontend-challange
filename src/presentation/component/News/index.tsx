@@ -1,31 +1,35 @@
 import './News.scss'
 import { useEffect, useState } from "react"
-import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 import { API } from "../../../infrastructure"
 
-import React from 'react';
-import { 
-    CardGroup,
-    Card,
-    CardImg,
-    CardBody,
-    CardTitle,
-    CardText,
-    Button
-} from 'reactstrap'
+import { Button } from 'reactstrap'
 import { addNews } from '../../../application'
+import ContainerCard from '../Card/ContainerCard'
+
+interface eventHandleSort {
+    target: {
+        removeAttribute: Function,
+        setAttribute: Function,
+        classList: any
+    }
+}
 
 const News = () => {
-    const [articles, setArticles] = useState<any>([])
+    const [articles, setArticles] = useState <[]>([])
+    const [sortBy, setSortBy] = useState <string>('')
+    const [pageSize, setPageSize] = useState <number>(20)
     const dispatch = useDispatch()
     const getArticles = async () => {
         try {
-            const response = await API.get(`/everything?q=bitcoin&sortBy=relevancy&apiKey=${process.env.REACT_APP_API_KEY}`)
+            const endpoint = `/everything?q=bitcoin&sortBy=${!sortBy ? 'relevancy' : sortBy}&pageSize=${pageSize}&apiKey=${process.env.REACT_APP_API_KEY}`
+            const response = await API.get(endpoint)
             setArticles(response.data.articles)
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            if (error.message === 'Network Error') toast.error('Network Error')
         }
     }
 
@@ -39,9 +43,27 @@ const News = () => {
         }))
     }
 
+    const handleSorting = (event: eventHandleSort, target: string): void => {
+        setSortBy(target)
+        const self = event.target
+        const currentTheme: string = self.classList[1].split('-')[2] || self.classList[1].split('-')[1]
+
+        if (self.classList.value.includes('active')) {
+            self.setAttribute('class', `btn btn-outline-${currentTheme}`)
+            return
+        }
+        
+        self.removeAttribute('class')
+        self.setAttribute('class', `btn btn-${currentTheme} active`)
+    }
+
+    const handleIncreasePageSize = (): void => {
+        setPageSize(pageSize + 20)
+    }
+
     useEffect(() => {
         getArticles()
-    }, [])
+    }, [sortBy, pageSize])
     return (
         <div className="home-page">
             <div className="title__home-page text-center">
@@ -50,33 +72,12 @@ const News = () => {
             </div>
             <div className="header__home-page">
                 <p>Search by: </p>
-                <Button color="primary" outline>Popularity</Button>
+                <Button color="primary" outline onClick={(e: any) => handleSorting(e, 'popularity')}>Popularity</Button>
             </div>
-            <CardGroup className="responsive-grid">
-                {articles.map((item:any, i:number) => (
-                    <Link to="/detail-news" key={i} className="wrapper__card" onClick={() => handleDetailNews(item)}>
-                        <Card>
-                            <div className="wrapper-img-body">
-                                <CardImg
-                                    alt={item.title}
-                                    src={item.urlToImage}
-                                    top
-                                    width="100%"
-                                /> 
-                                <span className="source">tes</span>
-                            </div> 
-                            <CardBody>
-                                <CardTitle tag="h3">
-                                    {item.title}
-                                </CardTitle>
-                                <CardText>
-                                    {item.description}
-                                </CardText>
-                            </CardBody>
-                        </Card>
-                    </Link>
-                ))}
-            </CardGroup>
+            <ContainerCard data={articles} handleDetailNews={handleDetailNews} />
+            <div className="text-center">
+                <Button color="primary" onClick={handleIncreasePageSize}>Load more</Button>
+            </div>
         </div>
     )
 }
