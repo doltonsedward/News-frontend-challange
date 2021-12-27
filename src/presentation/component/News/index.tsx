@@ -1,6 +1,7 @@
 import './News.scss'
-
 import { useEffect, useState } from "react"
+import { Link } from 'react-router-dom'
+
 import { API } from "../../../infrastructure"
 
 import { 
@@ -9,8 +10,7 @@ import {
     CardImg,
     CardBody,
     CardTitle,
-    CardText,
-    Button
+    CardText
 } from 'reactstrap'
 
 const News = () => {
@@ -32,7 +32,7 @@ const News = () => {
             <h1 className="text-center">Crash News</h1>
             <CardGroup className="responsive-grid">
                 {articles.map((item:any, i:number) => (
-                    <div key={i} className="wrapper__card">
+                    <Link to="/detail-news" key={i} className="wrapper__card">
                         <Card>
                             <div className="wrapper-img-body">
                                 <CardImg
@@ -52,7 +52,7 @@ const News = () => {
                                 </CardText>
                             </CardBody>
                         </Card>
-                    </div>
+                    </Link>
                 ))}
             </CardGroup>
         </div>
