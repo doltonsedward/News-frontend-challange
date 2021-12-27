@@ -1,0 +1,5 @@
+:root {
+    --gray: rgb(89, 89, 89);
+
+    --subtitle-color: var(--gray);
+}
