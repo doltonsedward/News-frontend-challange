@@ -1,3 +1,4 @@
 import DetailNews from "./DetailNews"
+import NotMatch from "./NotMatch"
 
-export { DetailNews }
+export { DetailNews, NotMatch }
