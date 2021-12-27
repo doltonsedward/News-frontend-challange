@@ -1,0 +1,34 @@
+.home-page {
+    padding: 20px;
+
+    .wrapper__card {
+        padding: 20px;
+
+        .card {
+            height: 100%;
+            box-shadow: 0 0 10px rgba($color: #000000, $alpha: .2);
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 20px rgba($color: #000000, $alpha: .2);
+            }
+
+            .image__card {
+                height: 50%;
+                object-fit: cover;
+            }
+
+            .body__card {
+                padding: 5px 12px;
+            }
+
+            .title__card {
+                font-size: 20px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}
