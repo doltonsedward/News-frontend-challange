@@ -1,16 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+interface NewsState {
+    title: string,
+    description: string,
+    image: string,
+    sourceName: string,
+    url: string
+}
+
+interface AddNewsAction {
+    payload: {
+        title: string,
+        description: string,
+        image: string,
+        sourceName: string,
+        url: string
+    }
+}
+
 export const newsReducer = createSlice({
-    name: "counter",
+    name: "news",
     initialState: {
-        title: ''
+        title: '',
+        description: '',
+        image: '',
+        sourceName: '',
+        url: '',
     },
     reducers: {
-        addCount: (state, action) => {
+        addNews: (state: NewsState, action: AddNewsAction) => {
             state.title = action.payload.title
+            state.description = action.payload.description
+            state.image = action.payload.image
+            state.sourceName = action.payload.sourceName
+            state.url = action.payload.url
         }
     }
 })
 
-export const { addCount } = newsReducer.actions
+export const { addNews } = newsReducer.actions
 export default newsReducer.reducer
