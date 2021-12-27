@@ -32,19 +32,24 @@ const News = () => {
             <h1 className="text-center">Crash News</h1>
             <CardGroup className="responsive-grid">
                 {articles.map((item:any, i:number) => (
-                    <div className="wrapper__card">
-                        <Card key={i} className="card">
-                            <CardImg
-                                alt={item.title}
-                                src={item.urlToImage}
-                                top
-                                width="100%"
-                                className="image__card"
-                            />  
-                            <CardBody className="body__card">
-                                <CardTitle tag="h2" className="title__card">
+                    <div key={i} className="wrapper__card">
+                        <Card>
+                            <div className="wrapper-img-body">
+                                <CardImg
+                                    alt={item.title}
+                                    src={item.urlToImage}
+                                    top
+                                    width="100%"
+                                /> 
+                                <span className="source">tes</span>
+                            </div> 
+                            <CardBody>
+                                <CardTitle tag="h2">
                                     {item.title}
                                 </CardTitle>
+                                <CardText>
+                                    {item.description}
+                                </CardText>
                             </CardBody>
                         </Card>
                     </div>
