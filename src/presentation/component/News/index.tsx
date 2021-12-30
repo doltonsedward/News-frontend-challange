@@ -10,14 +10,6 @@ import { Button } from 'reactstrap'
 import { addNews } from '../../../application'
 import ContainerCard from '../Card/ContainerCard'
 
-interface eventHandleSort {
-    target: {
-        removeAttribute: Function,
-        setAttribute: Function,
-        classList: any
-    }
-}
-
 const News = () => {
     const [articles, setArticles] = useState <[]>([])
     const [sortBy, setSortBy] = useState <string>('')
@@ -43,18 +35,8 @@ const News = () => {
         }))
     }
 
-    const handleSorting = (event: eventHandleSort, target: string): void => {
+    const handleSorting = (target: string): void => {
         setSortBy(target)
-        const self = event.target
-        const currentTheme: string = self.classList[1].split('-')[2] || self.classList[1].split('-')[1]
-
-        if (self.classList.value.includes('active')) {
-            self.setAttribute('class', `btn btn-outline-${currentTheme}`)
-            return
-        }
-        
-        self.removeAttribute('class')
-        self.setAttribute('class', `btn btn-${currentTheme} active`)
     }
 
     const handleIncreasePageSize = (): void => {
@@ -72,7 +54,11 @@ const News = () => {
             </div>
             <div className="header__home-page">
                 <p>Search by: </p>
-                <Button color="primary" outline onClick={(e: any) => handleSorting(e, 'popularity')}>Popularity</Button>
+                <Button color="success" onClick={() => handleSorting('popularity')}>Popularity</Button>
+                {' '}
+                <Button color="primary" onClick={() => handleSorting('relevancy')}>Relevancy</Button>
+                {' '}
+                <Button color="info" onClick={() => handleSorting('publishedAt')}>PublishedAt</Button>
             </div>
             <ContainerCard data={articles} handleDetailNews={handleDetailNews} />
             <div className="text-center">
