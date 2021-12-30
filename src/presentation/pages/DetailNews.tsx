@@ -1,33 +1,15 @@
 import { useSelector } from "react-redux"
+import { DetailNewsInterface } from "../../application"
+import DetailNews from "../component/News/Detail"
 
-interface DetailNewsState {
-    news: {
-        title: string,
-        description: string,
-        image: string,
-        sourceName: string,
-        url: string
-    }
-}
+const DetailNewsContainer = () => {
+    const news = useSelector((state: DetailNewsInterface) => state.news)
 
-const DetailNews = () => {
-    const { 
-        title,
-        description,
-        image,
-        sourceName,
-        url
-    } = useSelector((state: DetailNewsState) => state.news)
-
-    if (!title || !description) {
-        window.location.href = '/not-found'
-    }
+    if (!news.title || !news.description) window.location.href = '/not-found'
 
     return (
-        <div>
-            <img src={image} alt={title} />
-        </div>
+        <DetailNews news={news} />
     )
 }
 
-export default DetailNews
+export default DetailNewsContainer
