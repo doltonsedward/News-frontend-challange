@@ -13,11 +13,11 @@
         padding: 20px;
 
         .card {
-            box-shadow: 0 5px 10px rgba($color: #000000, $alpha: .3);
             cursor: pointer;
             overflow: hidden;
             text-overflow: ellipsis;
-
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+            
             &:hover {
                 transform: scale(1.05);
                 box-shadow: 0 5px 40px rgba($color: #000000, $alpha: .2);
