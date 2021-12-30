@@ -27,7 +27,7 @@ const ContainerCard = (props: Props) => {
                                 top
                                 width="100%"
                             /> 
-                            <span className="source">tes</span>
+                            <span className="source">{item.source.name}</span>
                         </div> 
                         <CardBody>
                             <CardTitle tag="h3">
